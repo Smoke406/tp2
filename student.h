@@ -1,36 +1,38 @@
 #pragma once
-#include <iostream>
 #include <string>
-using namespace std;
-class STUDENT {
+#include <iostream>
+#include <windows.h>
+#include <conio.h>
+struct Subject {
+    std::string name; // Название предмета
+    int grade;        // Оценка
+};
+
+class Student {
 private:
-    string surname;
-    int group_number;
-    pair<string, int>* subjects;
-    int subject_count;
+    std::string surname_and_initials; // Фамилия и инициалы
+    int group_number;                 // Номер группы
+    Subject* grades;                  // Динамический массив предметов и оценок
+    int grade_count;                  // Количество предметов
 
 public:
-    // Конструкторы
-    STUDENT();
-    STUDENT(const string& surname, int group_number, int subject_count);
-    STUDENT(const STUDENT& other);
+    Student();
+    Student(std::string surname, int group, int gradeCount);
+    Student(const Student& other);
+    ~Student();
 
-    // Деструктор
-    ~STUDENT();
+    void setSurnameAndInitials(const std::string&);
+    std::string getSurnameAndInitials() const;
 
-    // Методы
-    void setSurname(const string& surname);
-    string getSurname() const;
-
-    void setGroupNumber(int group_number);
+    void setGroupNumber(int);
     int getGroupNumber() const;
 
-    void setSubjects(const pair<string, int>* subjects, int count);
-    const pair<string, int>* getSubjects() const;
+    void setGrade(const std::string& subjectName, int grade, int index);
+    Subject getGrade(int index) const;
 
-    double calculateAverageGrade() const;
+    double getAverageGrade() const;
+    bool hasGradeTwo() const;
 
-    // Перегрузка операторов
-    friend ostream& operator<<(ostream& os, const STUDENT& student);
-    friend istream& operator>>(istream& is, STUDENT& student);
+    void print() const;
+    void edit();
 };

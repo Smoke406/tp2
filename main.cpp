@@ -1,90 +1,100 @@
 #include <iostream>
 #include "student.h"
-#include <algorithm>
+#include "keeper.h"
 #include "fileprocessor.h"
 #include <vector>
 #include <string>
 #include <conio.h>
-
+using namespace std;
+void menu()
+{
+    cout << "Меню:\n";
+    cout << "1. Вывести всех студентов\n";
+    cout << "2. Добавить студента в начало\n";
+    cout << "3. Добавить студента в конец\n";
+    cout << "4. Редактировать студента\n";
+    cout << "5. Удалить студента\n";
+    cout << "6. Найти студентов с оценкой 2\n";
+    cout << "7. Сортировка студентов по среднему баллу\n";
+    cout << "0. Назад\n";
+}
 void menuStudentManager() {
-   
-    std::vector<STUDENT> students;
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
     system("cls");
-    int choice;
-    while (true) {
-        std::cout << "\nМеню управления студентами:\n";
-        std::cout << "1. Добавить студента\n";
-        std::cout << "2. Редактировать студента\n";
-        std::cout << "3. Удалить студента\n";
-        std::cout << "4. Показать студентов с оценкой 2\n";
-        std::cout << "5. Упорядочить по среднему баллу\n";
-        std::cout << "0. Назад в главное меню\n";
-        std::cout << "Ваш выбор: ";
-        char choice;
+   // vector<Student*> students;
+    Keeper keeper;
+    //int studentCount = 0;
+    menu();
+    int p = 1;
+    while (p==1) {
+        //system("cls");
+       // menu();
 
+        char choice;
         switch (choice = _getch()) {
         case '1': {
             system("cls");
-            STUDENT newStudent;
-            std::cin >> newStudent;
-            students.push_back(newStudent);
+            menu();
+            cout << "\nВы выбрали операцию 1\n" << endl;
+            keeper.print_keeper();
             break;
         }
         case '2': {
             system("cls");
-            int index;
-            std::cout << "Введите индекс студента для редактирования: ";
-            std::cin >> index;
-
-            if (index < 0 || index >= students.size()) {
-                std::cout << "Неверный индекс.\n";
-                break;
-            }
-            std::cin >> students[index];
+            menu();
+            cout << "\nВы выбрали операцию 2\n" << endl;
+            ++keeper;
             break;
         }
         case '3': {
             system("cls");
-            int index;
-            std::cout << "Введите индекс студента для удаления: ";
-            std::cin >> index;
-
-            if (index < 0 || index >= students.size()) {
-                std::cout << "Неверный индекс.\n";
-                break;
-            }
-            students.erase(students.begin() + index);
+            menu();
+            cout << "\nВы выбрали операцию 3\n" << endl;
+            keeper++;
             break;
         }
         case '4': {
             system("cls");
-            bool found = false;
-            for (const auto& student : students) {
-                for (const auto& subject : student.getSubjects()) {
-                    if (subject.second == 2) {
-                        std::cout << student << "\n";
-                        found = true;
-                        break;
-                    }
-                }
-            }
-            if (!found) {
-                std::cout << "Студентов с оценкой 2 нет.\n";
-            }
+            menu();
+            cout << "\nВы выбрали операцию 4\n" << endl;
+            cout << "Введите номер элемента: ";
+            int n;
+            cin >> n;
+            //n = check();
+            keeper.edit_element(n);
             break;
         }
         case '5': {
             system("cls");
-            std::sort(students.begin(), students.end(), [](const STUDENT& a, const STUDENT& b) {
-                return a.getAverageGrade() < b.getAverageGrade();
-                });
-            std::cout << "Сортировка выполнена.\n";
+            menu();
+            cout << "\nВы выбрали операцию 5\n" << endl;
+            cout << "Введите номер элемента: ";
+            int n;
+            cin >> n;
+            //n = check();
+            keeper.delete_element(n);
+            break;
+        }
+        case '6': {
+            system("cls");
+            menu();
+            cout << "\nВы выбрали операцию 6\n" << endl;
+            keeper.find_students_with_grade_2();
+            break;
+        }
+        case '7': {
+            system("cls");
+            menu();
+            cout << "\nВы выбрали операцию 6\n" << endl;
+            keeper.sort_by_average_grade();
             break;
         }
         case '0':
-            return;
+            p = 0;
+            break;
         default:
-            std::cout << "Некорректный выбор. Попробуйте снова.\n";
+            cout << "Неверный выбор. Попробуйте снова.\n";
         }
     }
 }
@@ -149,10 +159,11 @@ void menuFileProcessor() {
     }
 }
 
-
 int main() {
+    
     int choice;
     setlocale(LC_ALL, "Russian");
+    
     while (true) {
         system("cls");
         std::cout << "\nГлавное меню:\n";
