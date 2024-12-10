@@ -2,6 +2,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <vector>
+
 using namespace std;
 
 Keeper::Keeper() : head(nullptr), tail(nullptr), count(0) {}
@@ -96,7 +97,7 @@ Keeper& Keeper::operator++() {
     cout << "Добавление студента в начало списка.\n";
     string name;
     int group, gradesCount;
-    cout << "Введите имя: ";
+    cout << "Введите фамилию и инициалы: ";
     cin.ignore();
     getline(cin, name);
     cout << "Введите номер группы: ";
@@ -111,10 +112,23 @@ Keeper& Keeper::operator++() {
         cout << "Предмет " << i + 1 << ": ";
         cin >> subject;
         cout << "Оценка: ";
-        cin >> grade;
-        student->setGrade(subject, grade, i);
+        int p=1;
+        while (p==1)
+        {
+            cin >> grade;
+            if ((grade >= 1) && (grade <= 5))
+            {
+                student->setGrade(subject, grade, i);
+                p = 0;
+            }
+            else
+            {
+                cout << "Некоректный ввод. Введите от 1 до 5\nОценка: ";
+            }
+        }
     }
     add_to_head(student);
+    
     return *this;
 }
 
@@ -122,12 +136,12 @@ Keeper& operator++(Keeper& K, int) {
     cout << "Добавление студента в конец списка.\n";
     string name;
     int group, gradesCount;
-    cout << "Введите имя: ";
+    cout << "Введите фамилию и инициалы: ";
     cin.ignore();
     getline(cin, name);
     cout << "Введите номер группы: ";
     cin >> group;
-    cout << "Введите количество оценок: ";
+    cout << "Введите количество предметов: ";
     cin >> gradesCount;
 
     Student* student = new Student(name, group, gradesCount);
@@ -137,10 +151,26 @@ Keeper& operator++(Keeper& K, int) {
         cout << "Предмет " << i + 1 << ": ";
         cin >> subject;
         cout << "Оценка: ";
-        cin >> grade;
-        student->setGrade(subject, grade, i);
+        int p = 1;
+        while (p == 1)
+        {
+            cin >> grade;
+            if ((grade >= 1) && (grade <= 5))
+            {
+                student->setGrade(subject, grade, i);
+                p = 0;
+            }
+            else
+            {
+                cout << "Некоректный ввод. Введите от 1 до 5\nОценка: ";
+            }
+        }
+        //grade = number();
+        // cin >> grade;
+        //student->setGrade(subject, grade, i);
     }
     K.add_to_tail(student);
+    
     return K;
 }
 
@@ -158,7 +188,9 @@ Keeper& Keeper::operator--(int) {
     tail = temp;
     tail->next = nullptr;
     count--;
+    
     return *this;
+
 }
 
 Keeper& operator--(Keeper& K) {
@@ -171,6 +203,7 @@ Keeper& operator--(Keeper& K) {
     delete temp->data;
     delete temp;
     K.count--;
+    
     return K;
 }
 

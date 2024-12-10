@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 #include <conio.h>
+#include "check.h"
 using namespace std;
 void menu()
 {
@@ -45,6 +46,9 @@ void menuStudentManager() {
             menu();
             cout << "\nВы выбрали операцию 2\n" << endl;
             ++keeper;
+            system("cls");
+            menu();
+            cout << "\nСтудент успешно добавлен!\n";
             break;
         }
         case '3': {
@@ -52,6 +56,9 @@ void menuStudentManager() {
             menu();
             cout << "\nВы выбрали операцию 3\n" << endl;
             keeper++;
+            system("cls");
+            menu();
+            cout << "\nСтудент успешно добавлен!\n";
             break;
         }
         case '4': {
@@ -60,8 +67,7 @@ void menuStudentManager() {
             cout << "\nВы выбрали операцию 4\n" << endl;
             cout << "Введите номер элемента: ";
             int n;
-            cin >> n;
-            //n = check();
+            n = check();
             keeper.edit_element(n);
             break;
         }
@@ -71,9 +77,11 @@ void menuStudentManager() {
             cout << "\nВы выбрали операцию 5\n" << endl;
             cout << "Введите номер элемента: ";
             int n;
-            cin >> n;
-            //n = check();
+            n = check();
             keeper.delete_element(n);
+            system("cls");
+            menu();
+            cout << "\nСтудент успешно удален!\n";
             break;
         }
         case '6': {
@@ -86,7 +94,7 @@ void menuStudentManager() {
         case '7': {
             system("cls");
             menu();
-            cout << "\nВы выбрали операцию 6\n" << endl;
+            cout << "\nВы выбрали операцию 7\n" << endl;
             keeper.sort_by_average_grade();
             break;
         }
@@ -98,22 +106,27 @@ void menuStudentManager() {
         }
     }
 }
-
+void textmenu()
+{
+    cout << "\nМеню работы с файлами:\n";
+    cout << "1. Считать файл\n";
+    cout << "2. Фильтровать строки с двузначными числами\n";
+    cout << "0. Назад в главное меню\n";
+    cout << "Ваш выбор: ";
+}
 void menuFileProcessor() {
     FileProcessor processor;
     std::string filename;
-    int choice;
-
+    char choice;
+    system("cls");
+    textmenu();
     while (true) {
-        std::cout << "\nМеню работы с файлами:\n";
-        std::cout << "1. Считать файл\n";
-        std::cout << "2. Фильтровать строки с двузначными числами\n";
-        std::cout << "0. Назад в главное меню\n";
-        std::cout << "Ваш выбор: ";
-        std::cin >> choice;
-
-        switch (choice) {
-        case 1: {
+        
+        
+        switch (choice = _getch()) {
+        case '1': {
+            system("cls");
+            textmenu();
             std::cout << "Введите имя файла: ";
             std::cin >> filename;
 
@@ -129,10 +142,11 @@ void menuFileProcessor() {
             }
             break;
         }
-        case 2: {
-            std::cout << "Введите имя файла: ";
-            std::cin >> filename;
-
+        case '2': {
+            //std::cout << "Введите имя файла: ";
+            //std::cin >> filename;
+            system("cls");
+            textmenu();
             try {
                 auto lines = processor.readFile(filename);
                 auto filteredLines = processor.filterLinesWithTwoDigitNumbers(lines);
@@ -151,7 +165,7 @@ void menuFileProcessor() {
             }
             break;
         }
-        case 0:
+        case '0':
             return;
         default:
             std::cout << "Некорректный выбор. Попробуйте снова.\n";

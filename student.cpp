@@ -21,7 +21,7 @@ Student::Student(const Student& other)
     for (int i = 0; i < grade_count; i++) {
         grades[i] = other.grades[i];
     }
-    std::cout << "онструктор копирования для Student\n";
+    std::cout << "Конструктор копирования для Student\n";
 }
 
 // Деструктор
@@ -133,9 +133,23 @@ void Student::edit() {
                 std::cout << "Предмет " << i + 1 << ": ";
                 std::cin >> subjectName;
                 std::cout << "Оценка: ";
-                std::cin >> grade;
+                int p = 1;
+                while (p == 1)
+                {
+                    std::cin >> grade;
+                    if ((grade >= 1) && (grade <= 5))
+                    {
+                        setGrade(subjectName, grade, i);
+                        p = 0;
+                    }
+                    else
+                    {
+                        std::cout << "Некоректный ввод. Введите от 1 до 5\nОценка: ";
+                    }
+                }
+               // std::cin >> grade;
 
-                setGrade(subjectName, grade, i);
+               // setGrade(subjectName, grade, i);
             }
 
             std::cout << "Оценки обновлены.\n";

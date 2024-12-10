@@ -12,7 +12,7 @@ class Student {
 private:
     std::string surname_and_initials; // Фамилия и инициалы
     int group_number;                 // Номер группы
-    Subject* grades;                  // Динамический массив предметов и оценок
+    Subject* grades;                  
     int grade_count;                  // Количество предметов
 
 public:
